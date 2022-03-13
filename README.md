@@ -8,8 +8,8 @@ A CrowdSec Bouncer for MikroTik RouterOS appliance
 ![GitHub](https://img.shields.io/github/license/tuxtof/cs-mikrotik-bouncer)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tuxtof/cs-mikrotik-bouncer)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tuxtof/cs-mikrotik-bouncer)](https://goreportcard.com/report/github.com/tuxtof/cs-mikrotik-bouncer)
-[![Maintainability](https://api.codeclimate.com/v1/badges/7177dce30f0abdf8bcbf/maintainability)](https://codeclimate.com/github/tuxtof/cs-mikrotik-bouncer/maintainability)
-[![ci](https://github.com/tuxtof/cs-mikrotik-bouncer/actions/workflows/main.yml/badge.svg)](https://github.com/tuxtof/cs-mikrotik-bouncer/actions/workflows/main.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0104e64dccffc4b42f52/maintainability)](https://codeclimate.com/github/tuxtof/cs-mikrotik-bouncer/maintainability)
+[![ci](https://github.com/tuxtof/cs-mikrotik-bouncer/actions/workflows/container-release.yaml/badge.svg)](https://github.com/tuxtof/cs-mikrotik-bouncer/actions/workflows/container-release.yaml)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tuxtof/cs-mikrotik-bouncer)
 ![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/tuxtof/cs-mikrotik-bouncer)
 
