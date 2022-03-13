@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	// logLevel              string
+	logLevel              string
 	crowdsecBouncerAPIKey string
 	crowdsecBouncerURL    string
 	mikrotikHost          string
@@ -28,6 +28,8 @@ func initConfig() {
 	viper.BindEnv("mikrotik_pass")
 	viper.BindEnv("mikrotik_tls")
 	viper.SetDefault("mikrotik_tls", "true")
+
+	logLevel = viper.GetString("log_level")
 
 	crowdsecBouncerAPIKey = viper.GetString("crowdsec_bouncer_api_key")
 	if crowdsecBouncerAPIKey == "" {
