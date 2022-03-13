@@ -24,11 +24,11 @@ COPY . /go/src/app
 RUN go get -d -v ./...
 
 # Compiling
-RUN go build -o /go/bin/app
+RUN go build -o /go/bin/cs-mikrotik-bouncer
 
 FROM gcr.io/distroless/base:nonroot
 COPY --from=health-build-env --chown=nonroot:nonroot /go/bin/healthchecker /
-COPY --from=build-env --chown=nonroot:nonroot /go/bin/app /
+COPY --from=build-env --chown=nonroot:nonroot /go/bin/cs-mikrotik-bouncer /
 
 # Run as a non root user.
 USER nonroot
@@ -38,4 +38,4 @@ USER nonroot
 #   CMD ["/healthchecker"]
 
 # Run app
-CMD ["/app"]
+CMD ["/cs-mikrotik-bouncer"]
