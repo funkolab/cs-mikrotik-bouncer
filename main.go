@@ -13,8 +13,8 @@ import (
 
 var (
 	// logLevel              = config.OptionalEnv("CROWDSEC_BOUNCER_LOG_LEVEL", "1")
-	crowdsecBouncerApiKey = config.RequiredEnv("CROWDSEC_BOUNCER_API_KEY")
-	crowdsecBouncerUrl    = config.OptionalEnv("CROWDSEC_URL", "http://crowdsec:8080/")
+	crowdsecBouncerAPIKey = config.RequiredEnv("CROWDSEC_BOUNCER_API_KEY")
+	crowdsecBouncerURL    = config.OptionalEnv("CROWDSEC_URL", "http://crowdsec:8080/")
 	mikrotikHost          = config.RequiredEnv("MIKROTIK_HOST")
 	username              = config.OptionalEnv("MIKROTIK_USER", "api")
 	password              = config.OptionalEnv("MIKROTIK_PASS", "password")
@@ -34,8 +34,8 @@ func main() {
 	flag.Parse()
 
 	bouncer := &csbouncer.StreamBouncer{
-		APIKey:         crowdsecBouncerApiKey,
-		APIUrl:         crowdsecBouncerUrl,
+		APIKey:         crowdsecBouncerAPIKey,
+		APIUrl:         crowdsecBouncerURL,
 		TickerInterval: "5s",
 	}
 

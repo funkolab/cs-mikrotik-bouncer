@@ -5,9 +5,7 @@ import (
 	"os"
 )
 
-/*
-	Check for an environment variable value, if absent use a default value
-*/
+// OptionalEnv - Check for an environment variable value, if absent use a default value
 func OptionalEnv(varName string, optional string) string {
 	envVar := os.Getenv(varName)
 	if envVar == "" {
@@ -16,9 +14,7 @@ func OptionalEnv(varName string, optional string) string {
 	return envVar
 }
 
-/*
-	Check for an environment variable value, exit program if not found
-*/
+// RequiredEnv - Check for an environment variable value, exit program if not found
 func RequiredEnv(varName string) string {
 	envVar := os.Getenv(varName)
 	if envVar == "" {
@@ -27,9 +23,7 @@ func RequiredEnv(varName string) string {
 	return envVar
 }
 
-/*
-	Check for an environment variable value with expected possibilities, exit program if value not expected
-*/
+// ExpectedEnv - Check for an environment variable value with expected possibilities, exit program if value not expected
 func ExpectedEnv(varName string, expected []string) string {
 	envVar := RequiredEnv(varName)
 	if !contains(expected, envVar) {

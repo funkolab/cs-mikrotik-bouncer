@@ -17,8 +17,8 @@ func main() {
 	}
 
 	// Calling bouncer health check
-	healthCheckUrl := fmt.Sprintf("http://127.0.0.1:%s/api/v1/ping", port)
-	resp, err := http.Get(healthCheckUrl)
+	healthCheckURL := fmt.Sprintf("http://127.0.0.1:%s/api/v1/ping", port)
+	resp, err := http.Get(healthCheckURL)
 	if err != nil {
 		log.Fatal("error while requesting bouncer's health check route :", err)
 	}
