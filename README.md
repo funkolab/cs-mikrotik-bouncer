@@ -37,14 +37,17 @@ The container is available as docker image `tuxtof/cs-mikrotik-bouncer`. It must
 Generate a bouncer API key following [CrowdSec documentation](https://doc.crowdsec.net/docs/cscli/cscli_bouncers_add)
 
 ## Configuration
-The webservice configuration is made via environment variables:
+The bouncer configuration is made via environment variables:
 
-* `CROWDSEC_BOUNCER_API_KEY`            - CrowdSec bouncer API key required to be authorized to request local API (required)`
-* `CROWDSEC_URL`                 - Host and port of CrowdSec agent, i.e. http://crowdsec:8080/ (required)`
-* `CROWDSEC_BOUNCER_LOG_LEVEL`          - Minimum log level for bouncer. Expected value [zerolog levels](https://pkg.go.dev/github.com/rs/zerolog#readme-leveled-logging). Default to 1
-* `MIKROTIK_HOST` - Mikrotik appliance address
-* `MIKROTIK_USER` - Mikrotik appliance username
-* `MIKROTIK_PASS` - Mikrotik appliance password
+| Name                       | Description                                                                                                        | Default                 | Required |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------|-------------------------|:--------:|
+| `CROWDSEC_BOUNCER_API_KEY` | CrowdSec bouncer API key required to be authorized to request local API                                            | `none`                  |    ✅     |
+| `CROWDSEC_URL`             | Host and port of CrowdSec agent                                                                                    | `http://crowdsec:8080/` |    ✅     |
+| `LOG_LEVEL`                | Minimum log level for bouncer in [zerolog levels](https://pkg.go.dev/github.com/rs/zerolog#readme-leveled-logging) | `1`                     |    ❌     |
+| `MIKROTIK_HOST`            | Mikrotik appliance address                                                                                         | `none`                  |    ✅     |
+| `MIKROTIK_USER`            | Mikrotik appliance username                                                                                        | `none`                  |    ✅     |
+| `MIKROTIK_PASS`            | Mikrotik appliance password                                                                                        | `none`                  |    ✅     |
+| `MIKROTIK_TLS`             | User TLS to connect to Mikrotik API                                                                                | `true`                  |    ❌     |
 
 
 # Contribution
