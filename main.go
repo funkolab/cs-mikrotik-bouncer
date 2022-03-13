@@ -17,10 +17,11 @@ func main() {
 		TickerInterval: "5s",
 	}
 	if err := bouncer.Init(); err != nil {
-		log.Fatal().Err(err)
+		log.Fatal().Err(err).Msg("Bouncer init failed")
 	}
 
 	c := initMikrotik()
+	defer c.Close()
 
 	go bouncer.Run()
 

@@ -21,12 +21,12 @@ func dial() (*routeros.Client, error) {
 
 func initMikrotik() *routeros.Client {
 
-	log.Print("connect to mikrotik")
+	log.Info().Msg("Connecting to mikrotik")
+
 	c, err := dial()
 	if err != nil {
-		log.Fatal().Err(err)
+		log.Fatal().Err(err).Str("host", mikrotikHost).Str("username", username).Bool("useTLS", useTLS).Msg("Connection failed")
 	}
-	defer c.Close()
 
 	if async {
 		c.Async()
@@ -36,9 +36,9 @@ func initMikrotik() *routeros.Client {
 	initCmd := "/ip/firewall/address-list/print ?list=crowdsec =.proplist=.id,address"
 	r, err := c.RunArgs(strings.Split(initCmd, " "))
 	if err != nil {
-		log.Fatal().Err(err)
+		log.Fatal().Err(err).Msg("address-list print failed")
 	}
-	log.Printf("fill %d entry in internal addrList\n", len(r.Re))
+	log.Info().Msgf("fill %d entry in internal addrList\n", len(r.Re))
 	for _, v := range r.Re {
 		addrList[v.Map["address"]] = v.Map[".id"]
 	}
@@ -56,7 +56,7 @@ func decisionProcess(bouncer *csbouncer.StreamBouncer, c *routeros.Client) {
 				delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", addrList[*decision.Value])
 				_, err := c.RunArgs(strings.Split(delCmd, " "))
 				if err != nil {
-					log.Fatal().Err(err)
+					log.Error().Err(err).Msg("address-list remove cmd failed")
 				}
 				delete(addrList, *decision.Value)
 				log.Info().Msgf("%s removed from mikrotik", *decision.Value)
@@ -94,7 +94,7 @@ func decisionProcess(bouncer *csbouncer.StreamBouncer, c *routeros.Client) {
 			} else {
 				r, err := c.RunArgs(strings.Split(addCmd, "#"))
 				if err != nil {
-					log.Fatal().Err(err)
+					log.Error().Err(err).Msg("address-list add cmd failed")
 				} else {
 					addrList[*decision.Value] = r.Done.List[0].Value
 					log.Info().Msgf("Address %s blocked in mikrotik", *decision.Value)
