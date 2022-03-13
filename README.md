@@ -17,23 +17,11 @@ A CrowdSec Bouncer for MikroTik RouterOS appliance
 This repository aim to implement a [CrowdSec](https://doc.crowdsec.net/) bouncer for the router [Mikrotik](https://mikrotik.com) to block malicious IP to access your services.
 For this it leverages [Mikrotik API](https://mikrotik.com) to populate a dynamic Firewall Address List.
 
-# Install
-## Prerequisites 
-[Docker](https://docs.docker.com/get-docker/) and [Docker-compose](https://docs.docker.com/compose/install/) installed.   
-You can use the docker-compose in the examples' folder as a starting point.
-Through Mikrotik it exposes the whoami countainer on port 80, with the bouncer accepting and rejecting client IP.   
-Launch your all services except the bouncer with the follow commands:
-```bash
-git clone https://github.com/tuxtof/cs-mikrotik-bouncer.git && \
-  cd cs-mikrotik-bouncer/examples && \
-  docker-compose up -d Mikrotik crowdsec whoami 
-```
-
 ## Procedure
-1. Get a bouncer API key from CrowdSec with command `docker exec crowdsec-example cscli bouncers add Mikrotik-bouncer`
+1. Get a bouncer API key from your CrowdSec with command `cscli bouncers add mikrotik-bouncer`
 2. Copy the API key printed. You **_WON'T_** be able the get it again.
 3. Paste this API key as the value for bouncer environment variable `CROWDSEC_BOUNCER_API_KEY`, instead of "MyApiKey"
-4. Start bouncer with `docker-compose up bouncer`
+4. Start bouncer with `docker-compose up bouncer` in the `example` directory
 
 
 Enjoy!

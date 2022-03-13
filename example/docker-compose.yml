@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  bouncer-mikrotik:
+    image: tuxtof/cs-mikrotik-bouncer:latest
+    container_name: bouncer-mikrotik
+    environment:
+      CROWDSEC_BOUNCER_API_KEY: MyApiKey
+      CROWDSEC_URL: "http://crowdsec:8080/"
+      MIKROTIK_HOST: "x.x.x.x:8728"
+      MIKROTIK_USER: "api"
+      MIKROTIK_PASS: "password"
+    restart: unless-stopped
+
+
