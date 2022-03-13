@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 
 	"github.com/spf13/viper"
 )
@@ -30,27 +31,32 @@ func initConfig() {
 	viper.SetDefault("mikrotik_tls", "true")
 
 	logLevel = viper.GetString("log_level")
+	level, err := zerolog.ParseLevel(logLevel)
+	if err != nil {
+		log.Fatal().Err(err).Msg("invalid log level")
+	}
+	zerolog.SetGlobalLevel(level)
 
 	crowdsecBouncerAPIKey = viper.GetString("crowdsec_bouncer_api_key")
 	if crowdsecBouncerAPIKey == "" {
-		log.Fatal("Crowdsec API key is not set")
+		log.Fatal().Msg("Crowdsec API key is not set")
 	}
 	crowdsecBouncerURL = viper.GetString("crowdsec_url")
 	if crowdsecBouncerURL == "" {
-		log.Fatal("Crowdsec URL is not set")
+		log.Fatal().Msg("Crowdsec URL is not set")
 	}
 	mikrotikHost = viper.GetString("mikrotik_host")
 
 	username = viper.GetString("mikrotik_user")
 	if username == "" {
-		log.Fatal("Mikrotik username is not set")
+		log.Fatal().Msg("Mikrotik username is not set")
 	}
 
 	password = viper.GetString("mikrotik_pass")
 	if password == "" {
-		log.Fatal("Mikrotik password is not set")
+		log.Fatal().Msg("Mikrotik password is not set")
 	}
 
 	useTLS = viper.GetBool("mikrotik_tls")
-	log.Printf("[INFO] Using config: %+v", viper.AllSettings())
+	log.Printf("Using config: %+v", viper.AllSettings())
 }

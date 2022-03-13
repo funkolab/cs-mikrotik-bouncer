@@ -1,13 +1,14 @@
 package main
 
 import (
-	"log"
+	"github.com/rs/zerolog/log"
 
 	csbouncer "github.com/crowdsecurity/go-cs-bouncer"
 )
 
 func main() {
 
+	// zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	initConfig()
 
 	bouncer := &csbouncer.StreamBouncer{
@@ -16,7 +17,7 @@ func main() {
 		TickerInterval: "5s",
 	}
 	if err := bouncer.Init(); err != nil {
-		log.Fatalf(err.Error())
+		log.Fatal().Err(err)
 	}
 
 	c := initMikrotik()

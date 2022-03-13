@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strings"
+
+	"github.com/rs/zerolog/log"
 
 	csbouncer "github.com/crowdsecurity/go-cs-bouncer"
 	"github.com/go-routeros/routeros"
@@ -20,9 +21,10 @@ func dial() (*routeros.Client, error) {
 
 func initMikrotik() *routeros.Client {
 
+	log.Print("connect to mikrotik")
 	c, err := dial()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err)
 	}
 	defer c.Close()
 
@@ -30,10 +32,11 @@ func initMikrotik() *routeros.Client {
 		c.Async()
 	}
 
+	log.Print("mikrotik list addr")
 	initCmd := "/ip/firewall/address-list/print ?list=crowdsec =.proplist=.id,address"
 	r, err := c.RunArgs(strings.Split(initCmd, " "))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err)
 	}
 	log.Printf("fill %d entry in internal addrList\n", len(r.Re))
 	for _, v := range r.Re {
@@ -47,19 +50,19 @@ func decisionProcess(bouncer *csbouncer.StreamBouncer, c *routeros.Client) {
 
 	for streamDecision := range bouncer.Stream {
 		for _, decision := range streamDecision.Deleted {
-			fmt.Printf("removed decisions: IP: %s | Scenario: %s | Duration: %s | Scope : %v\n", *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
+			log.Info().Msgf("removed decisions: IP: %s | Scenario: %s | Duration: %s | Scope : %v", *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
 
 			if addrList[*decision.Value] != "" {
 				delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", addrList[*decision.Value])
 				_, err := c.RunArgs(strings.Split(delCmd, " "))
 				if err != nil {
-					fmt.Println(err)
+					log.Fatal().Err(err)
 				}
 				delete(addrList, *decision.Value)
-				fmt.Printf("%s removed from mikrotik\n", *decision.Value)
+				log.Info().Msgf("%s removed from mikrotik", *decision.Value)
 
 			} else {
-				fmt.Printf("%s not find in addrList\n", *decision.Value)
+				log.Info().Msgf("%s not find in addrList", *decision.Value)
 				// findCmd := fmt.Sprintf("/ip/firewall/address-list/print ?list=crowdsec ?address=%s =.proplist=.id", *decision.Value)
 				// fmt.Printf("Search address %s in mikrotik ", *decision.Value)
 				// r, err := c.RunArgs(strings.Split(findCmd, " "))
@@ -82,19 +85,19 @@ func decisionProcess(bouncer *csbouncer.StreamBouncer, c *routeros.Client) {
 
 		}
 		for _, decision := range streamDecision.New {
-			fmt.Printf("new decisions from %s: IP: %s | Scenario: %s | Duration: %s | Scope : %v\n", *decision.Origin, *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
+			log.Info().Msgf("new decisions from %s: IP: %s | Scenario: %s | Duration: %s | Scope : %v", *decision.Origin, *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
 
 			addCmd := fmt.Sprintf("/ip/firewall/address-list/add#=list=crowdsec#=address=%s#=comment=%s#=timeout=%s", *decision.Value, *decision.Scenario, *decision.Duration)
 
 			if addrList[*decision.Value] != "" {
-				fmt.Printf("Address %s already present\n", *decision.Value)
+				log.Info().Msgf("Address %s already present", *decision.Value)
 			} else {
 				r, err := c.RunArgs(strings.Split(addCmd, "#"))
 				if err != nil {
-					fmt.Println(err)
+					log.Fatal().Err(err)
 				} else {
 					addrList[*decision.Value] = r.Done.List[0].Value
-					fmt.Printf("Address %s blocked in mikrotik\n", *decision.Value)
+					log.Info().Msgf("Address %s blocked in mikrotik", *decision.Value)
 				}
 			}
 		}

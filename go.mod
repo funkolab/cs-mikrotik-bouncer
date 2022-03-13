@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/crowdsecurity/go-cs-bouncer v0.0.0-20220222102709-de69a955c07b
 	github.com/go-routeros/routeros v0.0.0-20210123142807-2a44d57c6730
+	github.com/rs/zerolog v1.26.1
 	github.com/spf13/viper v1.10.1
 )
 
