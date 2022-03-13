@@ -2,8 +2,8 @@
 <img src="https://github.com/tuxtof/cs-mikrotik-bouncer/raw/main/docs/assets/crowdsec_mikrotik_logo.png" alt="CrowdSec" title="CrowdSec" width="300" height="280" />
 </p>
 
-# cs-mikrotik-bouncer
-A crowdsec bouncer for MikroTik RouterOS appliance
+# CrowdSec Mikrotik Bouncer
+A CrowdSec Bouncer for MikroTik RouterOS appliance
 
 ![GitHub](https://img.shields.io/github/license/tuxtof/cs-mikrotik-bouncer)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tuxtof/cs-mikrotik-bouncer)
