@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://github.com/tuxtof/cs-mikrotik-bouncer/raw/main/docs/assets/crowdsec_mikrotik_logo.png" alt="CrowdSec" title="CrowdSec" width="300" height="280" />
+</p>
+
 # cs-mikrotik-bouncer
 A crowdsec bouncer for MikroTik RouterOS appliance
 
