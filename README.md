@@ -17,24 +17,30 @@ A CrowdSec Bouncer for MikroTik RouterOS appliance
 This repository aim to implement a [CrowdSec](https://doc.crowdsec.net/) bouncer for the router [Mikrotik](https://mikrotik.com) to block malicious IP to access your services.
 For this it leverages [Mikrotik API](https://mikrotik.com) to populate a dynamic Firewall Address List.
 
-## Procedure
-1. Get a bouncer API key from your CrowdSec with command `cscli bouncers add mikrotik-bouncer`
-2. Copy the API key printed. You **_WON'T_** be able the get it again.
-3. Paste this API key as the value for bouncer environment variable `CROWDSEC_BOUNCER_API_KEY`, instead of "MyApiKey"
-4. Start bouncer with `docker-compose up bouncer` in the `example` directory
-
-
-Enjoy!
 
 # Usage
 For now, this web service is mainly fought to be used as a container.   
 If you need to build from source, you can get some inspiration from the Dockerfile.
+
 
 ## Prerequisites
 You should have a Mikrotik appliance and a CrowdSec instance running.   
 The container is available as docker image `tuxtof/cs-mikrotik-bouncer`. It must have access to CrowdSec and to Mikrotik.   
 
 Generate a bouncer API key following [CrowdSec documentation](https://doc.crowdsec.net/docs/cscli/cscli_bouncers_add)
+
+## Procedure
+1. Get a bouncer API key from your CrowdSec with command `cscli bouncers add mikrotik-bouncer`
+2. Copy the API key printed. You **_WON'T_** be able the get it again.
+3. Paste this API key as the value for bouncer environment variable `CROWDSEC_BOUNCER_API_KEY`, instead of "MyApiKey"
+4. Start bouncer with `docker-compose up bouncer` in the `example` directory
+5. Create `drop Filter Rules` in `input` and `forward` Chain with the `crowdsec Source Address List`
+
+```shell
+/ip/firewall/filter/
+add action=drop src-address-list=crowdsec chain=input  in-interface=your-wan-interface place-before=0 comment="crowdsec input drop rules"
+add action=drop src-address-list=crowdsec chain=forward in-interface=your-wan-interface place-before=0 comment="crowdsec forward drop rules"
+```
 
 ## Configuration
 The bouncer configuration is made via environment variables:
