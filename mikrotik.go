@@ -52,34 +52,27 @@ func decisionProcess(streamDecision *models.DecisionsStreamResponse, c *routeros
 		log.Info().Msgf("removed decisions: IP: %s | Scenario: %s | Duration: %s | Scope : %v", *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
 
 		if addrList[*decision.Value] != "" {
-			delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", addrList[*decision.Value])
-			_, err := c.RunArgs(strings.Split(delCmd, " "))
+			log.Info().Msgf("Verify address %s in mikrotik", *decision.Value)
+			checkCmd := fmt.Sprintf("/ip/firewall/address-list/print =.proplist=address ?.id=%s", addrList[*decision.Value])
+			r, err := c.RunArgs(strings.Split(checkCmd, " "))
 			if err != nil {
-				log.Error().Err(err).Msg("address-list remove cmd failed")
+				log.Fatal().Err(err).Msg("address-list search cmd failed")
+			}
+
+			if len(r.Re) == 1 && r.Re[0].Map["address"] == *decision.Value {
+				delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", addrList[*decision.Value])
+				_, err = c.RunArgs(strings.Split(delCmd, " "))
+				if err != nil {
+					log.Error().Err(err).Msg("address-list remove cmd failed")
+				}
+				log.Info().Msgf("%s removed from mikrotik", *decision.Value)
+			} else {
+				log.Info().Msgf("%s already removed from mikrotik", *decision.Value)
 			}
 			delete(addrList, *decision.Value)
-			log.Info().Msgf("%s removed from mikrotik", *decision.Value)
 
 		} else {
-			log.Info().Msgf("%s not find in addrList", *decision.Value)
-			// findCmd := fmt.Sprintf("/ip/firewall/address-list/print ?list=crowdsec ?address=%s =.proplist=.id", *decision.Value)
-			// fmt.Printf("Search address %s in mikrotik ", *decision.Value)
-			// r, err := c.RunArgs(strings.Split(findCmd, " "))
-			// if err != nil {
-			// 	fmt.Println(err)
-			// }
-			// if len(r.Re) > 0 {
-			// 	fmt.Printf("found (%s)\n", r.Re[0].Map[".id"])
-			// 	delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", r.Re[0].Map[".id"])
-			// 	fmt.Printf("Delete address %s in mikrotik ", *decision.Value)
-			// 	_, err := c.RunArgs(strings.Split(delCmd, " "))
-			// 	if err != nil {
-			// 		fmt.Println(err)
-			// 	}
-			// 	fmt.Println("done")
-			// } else {
-			// 	fmt.Println("not found")
-			// }
+			log.Info().Msgf("%s not find in local cache", *decision.Value)
 		}
 
 	}
