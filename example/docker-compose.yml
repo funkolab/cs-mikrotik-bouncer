@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   bouncer-mikrotik:
-    image: tuxtof/cs-mikrotik-bouncer:latest
+    image: ghcr.io/tuxtof/cs-mikrotik-bouncer:latest
     container_name: bouncer-mikrotik
     environment:
       CROWDSEC_BOUNCER_API_KEY: MyApiKey
