@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/crowdsecurity/crowdsec/pkg/models"
 	"github.com/rs/zerolog/log"
 
-	csbouncer "github.com/crowdsecurity/go-cs-bouncer"
 	"github.com/go-routeros/routeros"
 )
 
@@ -46,59 +46,57 @@ func initMikrotik() *routeros.Client {
 	return c
 }
 
-func decisionProcess(bouncer *csbouncer.StreamBouncer, c *routeros.Client) {
+func decisionProcess(streamDecision *models.DecisionsStreamResponse, c *routeros.Client) {
 
-	for streamDecision := range bouncer.Stream {
-		for _, decision := range streamDecision.Deleted {
-			log.Info().Msgf("removed decisions: IP: %s | Scenario: %s | Duration: %s | Scope : %v", *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
+	for _, decision := range streamDecision.Deleted {
+		log.Info().Msgf("removed decisions: IP: %s | Scenario: %s | Duration: %s | Scope : %v", *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
 
-			if addrList[*decision.Value] != "" {
-				delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", addrList[*decision.Value])
-				_, err := c.RunArgs(strings.Split(delCmd, " "))
-				if err != nil {
-					log.Error().Err(err).Msg("address-list remove cmd failed")
-				}
-				delete(addrList, *decision.Value)
-				log.Info().Msgf("%s removed from mikrotik", *decision.Value)
-
-			} else {
-				log.Info().Msgf("%s not find in addrList", *decision.Value)
-				// findCmd := fmt.Sprintf("/ip/firewall/address-list/print ?list=crowdsec ?address=%s =.proplist=.id", *decision.Value)
-				// fmt.Printf("Search address %s in mikrotik ", *decision.Value)
-				// r, err := c.RunArgs(strings.Split(findCmd, " "))
-				// if err != nil {
-				// 	fmt.Println(err)
-				// }
-				// if len(r.Re) > 0 {
-				// 	fmt.Printf("found (%s)\n", r.Re[0].Map[".id"])
-				// 	delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", r.Re[0].Map[".id"])
-				// 	fmt.Printf("Delete address %s in mikrotik ", *decision.Value)
-				// 	_, err := c.RunArgs(strings.Split(delCmd, " "))
-				// 	if err != nil {
-				// 		fmt.Println(err)
-				// 	}
-				// 	fmt.Println("done")
-				// } else {
-				// 	fmt.Println("not found")
-				// }
+		if addrList[*decision.Value] != "" {
+			delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", addrList[*decision.Value])
+			_, err := c.RunArgs(strings.Split(delCmd, " "))
+			if err != nil {
+				log.Error().Err(err).Msg("address-list remove cmd failed")
 			}
+			delete(addrList, *decision.Value)
+			log.Info().Msgf("%s removed from mikrotik", *decision.Value)
 
+		} else {
+			log.Info().Msgf("%s not find in addrList", *decision.Value)
+			// findCmd := fmt.Sprintf("/ip/firewall/address-list/print ?list=crowdsec ?address=%s =.proplist=.id", *decision.Value)
+			// fmt.Printf("Search address %s in mikrotik ", *decision.Value)
+			// r, err := c.RunArgs(strings.Split(findCmd, " "))
+			// if err != nil {
+			// 	fmt.Println(err)
+			// }
+			// if len(r.Re) > 0 {
+			// 	fmt.Printf("found (%s)\n", r.Re[0].Map[".id"])
+			// 	delCmd := fmt.Sprintf("/ip/firewall/address-list/remove =numbers=%s", r.Re[0].Map[".id"])
+			// 	fmt.Printf("Delete address %s in mikrotik ", *decision.Value)
+			// 	_, err := c.RunArgs(strings.Split(delCmd, " "))
+			// 	if err != nil {
+			// 		fmt.Println(err)
+			// 	}
+			// 	fmt.Println("done")
+			// } else {
+			// 	fmt.Println("not found")
+			// }
 		}
-		for _, decision := range streamDecision.New {
-			log.Info().Msgf("new decisions from %s: IP: %s | Scenario: %s | Duration: %s | Scope : %v", *decision.Origin, *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
 
-			addCmd := fmt.Sprintf("/ip/firewall/address-list/add#=list=crowdsec#=address=%s#=comment=%s#=timeout=%s", *decision.Value, *decision.Scenario, *decision.Duration)
+	}
+	for _, decision := range streamDecision.New {
+		log.Info().Msgf("new decisions from %s: IP: %s | Scenario: %s | Duration: %s | Scope : %v", *decision.Origin, *decision.Value, *decision.Scenario, *decision.Duration, *decision.Scope)
 
-			if addrList[*decision.Value] != "" {
-				log.Info().Msgf("Address %s already present", *decision.Value)
+		addCmd := fmt.Sprintf("/ip/firewall/address-list/add#=list=crowdsec#=address=%s#=comment=%s#=timeout=%s", *decision.Value, *decision.Scenario, *decision.Duration)
+
+		if addrList[*decision.Value] != "" {
+			log.Info().Msgf("Address %s already present", *decision.Value)
+		} else {
+			r, err := c.RunArgs(strings.Split(addCmd, "#"))
+			if err != nil {
+				log.Error().Err(err).Msg("address-list add cmd failed")
 			} else {
-				r, err := c.RunArgs(strings.Split(addCmd, "#"))
-				if err != nil {
-					log.Error().Err(err).Msg("address-list add cmd failed")
-				} else {
-					addrList[*decision.Value] = r.Done.List[0].Value
-					log.Info().Msgf("Address %s blocked in mikrotik", *decision.Value)
-				}
+				addrList[*decision.Value] = r.Done.List[0].Value
+				log.Info().Msgf("Address %s blocked in mikrotik", *decision.Value)
 			}
 		}
 	}

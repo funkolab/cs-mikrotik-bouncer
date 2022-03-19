@@ -3,17 +3,18 @@ module github.com/tuxtof/cs-mikrotik-bouncer
 go 1.17
 
 require (
-	github.com/crowdsecurity/go-cs-bouncer v0.0.0-20220222102709-de69a955c07b
+	github.com/crowdsecurity/crowdsec v1.3.2
+	github.com/crowdsecurity/go-cs-bouncer v0.0.0-20220316142326-5af635d49c23
 	github.com/go-routeros/routeros v0.0.0-20210123142807-2a44d57c6730
 	github.com/rs/zerolog v1.26.1
 	github.com/spf13/viper v1.10.1
+	gopkg.in/tomb.v2 v2.0.0-20161208151619-d5d1b5820637
 )
 
 require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
-	github.com/crowdsecurity/crowdsec v1.3.2 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-openapi/analysis v0.21.2 // indirect
 	github.com/go-openapi/errors v0.20.2 // indirect
@@ -42,7 +43,7 @@ require (
 	github.com/subosito/gotenv v1.2.0 // indirect
 	go.mongodb.org/mongo-driver v1.8.4 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220310020820-b874c991c1a5 // indirect
+	golang.org/x/sys v0.0.0-20220318055525-2edf467146b5 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/ini.v1 v1.66.4 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

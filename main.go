@@ -1,10 +1,15 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/rs/zerolog/log"
+	"gopkg.in/tomb.v2"
 
 	csbouncer "github.com/crowdsecurity/go-cs-bouncer"
 )
+
+var t tomb.Tomb
 
 func main() {
 
@@ -23,8 +28,28 @@ func main() {
 	c := initMikrotik()
 	defer c.Close()
 
-	go bouncer.Run()
+	t.Go(func() error {
+		bouncer.Run()
+		return fmt.Errorf("stream api init failed")
+	})
 
-	decisionProcess(bouncer, c)
+	t.Go(func() error {
+		log.Printf("Processing new and deleted decisions . . .")
+		for {
+			select {
+			case <-t.Dying():
+				log.Error().Msg("terminating bouncer process")
+				return nil
+			case decisions := <-bouncer.Stream:
+				decisionProcess(decisions, c)
+			}
+		}
+	})
+
+	err := t.Wait()
+
+	if err != nil {
+		log.Error().Err(err).Send()
+	}
 
 }
