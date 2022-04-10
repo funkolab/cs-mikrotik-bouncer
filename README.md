@@ -34,10 +34,15 @@ Generate a bouncer API key following [CrowdSec documentation](https://doc.crowds
 2. Copy the API key printed. You **_WON'T_** be able the get it again.
 3. Paste this API key as the value for bouncer environment variable `CROWDSEC_BOUNCER_API_KEY`, instead of "MyApiKey"
 4. Start bouncer with `docker-compose up bouncer` in the `example` directory
-5. Create `drop Filter Rules` in `input` and `forward` Chain with the `crowdsec Source Address List`
+5. Create `IP drop Filter Rules` in `input` and `forward` Chain with the `crowdsec Source Address List`
+6. Create `IPv6 drop Filter Rules` in `input` and `forward` Chain with the `crowdsec Source Address List` (if IPv6 used)
 
 ```shell
 /ip/firewall/filter/
+add action=drop src-address-list=crowdsec chain=input  in-interface=your-wan-interface place-before=0 comment="crowdsec input drop rules"
+add action=drop src-address-list=crowdsec chain=forward in-interface=your-wan-interface place-before=0 comment="crowdsec forward drop rules"
+
+/ipv6/firewall/filter/
 add action=drop src-address-list=crowdsec chain=input  in-interface=your-wan-interface place-before=0 comment="crowdsec input drop rules"
 add action=drop src-address-list=crowdsec chain=forward in-interface=your-wan-interface place-before=0 comment="crowdsec forward drop rules"
 ```

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/go-routeros/routeros"
 	"github.com/rs/zerolog/log"
 	"gopkg.in/tomb.v2"
 
@@ -10,6 +11,11 @@ import (
 )
 
 var t tomb.Tomb
+
+type mikrotikAddrList struct {
+	c     *routeros.Client
+	cache map[string]string
+}
 
 func main() {
 
@@ -25,8 +31,10 @@ func main() {
 		log.Fatal().Err(err).Msg("Bouncer init failed")
 	}
 
-	c := initMikrotik()
-	defer c.Close()
+	var mal mikrotikAddrList
+
+	mal.initMikrotik()
+	defer mal.c.Close()
 
 	t.Go(func() error {
 		bouncer.Run()
@@ -41,7 +49,7 @@ func main() {
 				log.Error().Msg("terminating bouncer process")
 				return nil
 			case decisions := <-bouncer.Stream:
-				decisionProcess(decisions, c)
+				mal.decisionProcess(decisions)
 			}
 		}
 	})
