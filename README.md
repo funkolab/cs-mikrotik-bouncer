@@ -1,17 +1,17 @@
 <p align="center">
-<img src="https://github.com/tuxtof/cs-mikrotik-bouncer/raw/main/docs/assets/crowdsec_mikrotik_logo.png" alt="CrowdSec" title="CrowdSec" width="300" height="280" />
+<img src="https://github.com/funkolab/cs-mikrotik-bouncer/raw/main/docs/assets/crowdsec_mikrotik_logo.png" alt="CrowdSec" title="CrowdSec" width="300" height="280" />
 </p>
 
 # CrowdSec Mikrotik Bouncer
 A CrowdSec Bouncer for MikroTik RouterOS appliance
 
-![GitHub](https://img.shields.io/github/license/tuxtof/cs-mikrotik-bouncer)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tuxtof/cs-mikrotik-bouncer)
-[![Go Report Card](https://goreportcard.com/badge/github.com/tuxtof/cs-mikrotik-bouncer)](https://goreportcard.com/report/github.com/tuxtof/cs-mikrotik-bouncer)
-[![Maintainability](https://api.codeclimate.com/v1/badges/0104e64dccffc4b42f52/maintainability)](https://codeclimate.com/github/tuxtof/cs-mikrotik-bouncer/maintainability)
-[![ci](https://github.com/tuxtof/cs-mikrotik-bouncer/actions/workflows/container-release.yaml/badge.svg)](https://github.com/tuxtof/cs-mikrotik-bouncer/actions/workflows/container-release.yaml)
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tuxtof/cs-mikrotik-bouncer)
-![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/tuxtof/cs-mikrotik-bouncer)
+![GitHub](https://img.shields.io/github/license/funkolab/cs-mikrotik-bouncer)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/funkolab/cs-mikrotik-bouncer)
+[![Go Report Card](https://goreportcard.com/badge/github.com/funkolab/cs-mikrotik-bouncer)](https://goreportcard.com/report/github.com/funkolab/cs-mikrotik-bouncer)
+[![Maintainability](https://api.codeclimate.com/v1/badges/0104e64dccffc4b42f52/maintainability)](https://codeclimate.com/github/funkolab/cs-mikrotik-bouncer/maintainability)
+[![ci](https://github.com/funkolab/cs-mikrotik-bouncer/actions/workflows/container-release.yaml/badge.svg)](https://github.com/funkolab/cs-mikrotik-bouncer/actions/workflows/container-release.yaml)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/funkolab/cs-mikrotik-bouncer)
+![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/funkolab/cs-mikrotik-bouncer)
 
 # Description
 This repository aim to implement a [CrowdSec](https://doc.crowdsec.net/) bouncer for the router [Mikrotik](https://mikrotik.com) to block malicious IP to access your services.
@@ -25,7 +25,7 @@ If you need to build from source, you can get some inspiration from the Dockerfi
 
 ## Prerequisites
 You should have a Mikrotik appliance and a CrowdSec instance running.   
-The container is available as docker image `ghcr.io/tuxtof/cs-mikrotik-bouncer` and `tuxtof/cs-mikrotik-bouncer`. It must have access to CrowdSec and to Mikrotik.   
+The container is available as docker image `ghcr.io/funkolab/cs-mikrotik-bouncer` and `funkolab/cs-mikrotik-bouncer`. It must have access to CrowdSec and to Mikrotik.   
 
 Generate a bouncer API key following [CrowdSec documentation](https://doc.crowdsec.net/docs/cscli/cscli_bouncers_add)
 

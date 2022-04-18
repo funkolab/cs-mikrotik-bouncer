@@ -1,4 +1,4 @@
-module github.com/tuxtof/cs-mikrotik-bouncer
+module github.com/funkolab/cs-mikrotik-bouncer
 
 go 1.17
 
