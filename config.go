@@ -62,5 +62,9 @@ func initConfig() {
 
 	useTLS = viper.GetBool("mikrotik_tls")
 	useIPV6 = viper.GetBool("mikrotik_ipv6")
-	log.Printf("Using config: %+v", viper.AllSettings())
+
+	all := viper.AllSettings()
+	delete(all, "mikrotik_pass")
+
+	log.Printf("Using config: %+v", all)
 }
