@@ -59,6 +59,8 @@ The bouncer configuration is made via environment variables:
 | `MIKROTIK_USER`            | Mikrotik appliance username                                                                                        | `none`                  |    ✅     |
 | `MIKROTIK_PASS`            | Mikrotik appliance password                                                                                        | `none`                  |    ✅     |
 | `MIKROTIK_TLS`             | User TLS to connect to Mikrotik API                                                                                | `true`                  |    ❌     |
+| `MIKROTIK_IPV6`            | Enable / Disable IPv6 support                                                                                      | `true`                  |    ❌     |
+
 
 
 # Contribution
