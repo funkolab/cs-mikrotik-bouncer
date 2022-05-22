@@ -16,6 +16,7 @@ var (
 	password              string
 	async                 bool
 	useTLS                bool
+	useIPV6               bool
 )
 
 func initConfig() {
@@ -29,6 +30,8 @@ func initConfig() {
 	viper.BindEnv("mikrotik_pass")
 	viper.BindEnv("mikrotik_tls")
 	viper.SetDefault("mikrotik_tls", "true")
+	viper.BindEnv("mikrotik_ipv6")
+	viper.SetDefault("mikrotik_ipv6", "true")
 
 	logLevel = viper.GetString("log_level")
 	level, err := zerolog.ParseLevel(logLevel)
@@ -58,5 +61,6 @@ func initConfig() {
 	}
 
 	useTLS = viper.GetBool("mikrotik_tls")
+	useIPV6 = viper.GetBool("mikrotik_ipv6")
 	log.Printf("Using config: %+v", viper.AllSettings())
 }

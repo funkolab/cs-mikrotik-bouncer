@@ -34,7 +34,11 @@ func (mal *mikrotikAddrList) initMikrotik() {
 
 	mal.cache = make(map[string]string)
 
-	protos := []string{"ip", "ipv6"}
+	protos := []string{"ip"}
+
+	if useIPV6 {
+		protos = append(protos, "ipv6")
+	}
 
 	for _, proto := range protos {
 		log.Info().Msgf("mikrotik %s list addr", proto)
@@ -43,7 +47,7 @@ func (mal *mikrotikAddrList) initMikrotik() {
 		if err != nil {
 			log.Fatal().Err(err).Msg("address-list print failed")
 		}
-		log.Info().Msgf("fill %d entry in internal addrList\n", len(r.Re))
+		log.Info().Msgf("fill %d entry in internal %s addrList", len(r.Re), proto)
 		for _, v := range r.Re {
 			mal.cache[v.Map["address"]] = v.Map[".id"]
 		}
@@ -56,7 +60,12 @@ func (mal *mikrotikAddrList) add(decision *models.Decision) {
 
 	var proto string
 	if strings.Contains(*decision.Value, ":") {
+		if !useIPV6 {
+			log.Info().Msgf("Ignore adding address %s (IPv6 disabled)", *decision.Value)
+			return
+		}
 		proto = "ipv6"
+
 	} else {
 		proto = "ip"
 	}
@@ -91,6 +100,10 @@ func (mal *mikrotikAddrList) remove(decision *models.Decision) {
 
 	var proto string
 	if strings.Contains(*decision.Value, ":") {
+		log.Info().Msgf("Ignore removing address %s (IPv6 disabled)", *decision.Value)
+		if !useIPV6 {
+			return
+		}
 		proto = "ipv6"
 	} else {
 		proto = "ip"
