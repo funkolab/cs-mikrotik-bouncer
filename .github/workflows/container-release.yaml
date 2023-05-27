@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       
       - name: Install ko 
-        uses: imjasonh/setup-ko@v0.4
+        uses: imjasonh/setup-ko@v0.6
       
       - name: Docker meta
         id: meta
