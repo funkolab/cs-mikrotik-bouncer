@@ -1,16 +1,16 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/go-routeros/routeros"
 	"github.com/rs/zerolog/log"
-	"gopkg.in/tomb.v2"
+
+	"golang.org/x/sync/errgroup"
 
 	csbouncer "github.com/crowdsecurity/go-cs-bouncer"
 )
-
-var t tomb.Tomb
 
 type mikrotikAddrList struct {
 	c     *routeros.Client
@@ -36,16 +36,18 @@ func main() {
 	mal.initMikrotik()
 	defer mal.c.Close()
 
-	t.Go(func() error {
-		bouncer.Run()
-		return fmt.Errorf("stream api init failed")
+	g, ctx := errgroup.WithContext(context.Background())
+
+	g.Go(func() error {
+		bouncer.Run(ctx)
+		return fmt.Errorf("bouncer stream halted")
 	})
 
-	t.Go(func() error {
+	g.Go(func() error {
 		log.Printf("Processing new and deleted decisions . . .")
 		for {
 			select {
-			case <-t.Dying():
+			case <-ctx.Done():
 				log.Error().Msg("terminating bouncer process")
 				return nil
 			case decisions := <-bouncer.Stream:
@@ -54,7 +56,7 @@ func main() {
 		}
 	})
 
-	err := t.Wait()
+	err := g.Wait()
 
 	if err != nil {
 		log.Error().Err(err).Send()
