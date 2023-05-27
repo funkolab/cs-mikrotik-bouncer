@@ -25,7 +25,7 @@ If you need to build from source, you can get some inspiration from the Dockerfi
 
 ## Prerequisites
 You should have a Mikrotik appliance and a CrowdSec instance running.   
-The container is available as docker image `ghcr.io/funkolab/cs-mikrotik-bouncer` and `funkolab/cs-mikrotik-bouncer`. It must have access to CrowdSec and to Mikrotik.   
+The container is available as docker image `ghcr.io/funkolab/cs-mikrotik-bouncer`. It must have access to CrowdSec and to Mikrotik.   
 
 Generate a bouncer API key following [CrowdSec documentation](https://doc.crowdsec.net/docs/cscli/cscli_bouncers_add)
 
