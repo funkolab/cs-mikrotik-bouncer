@@ -6,7 +6,7 @@ require (
 	github.com/crowdsecurity/crowdsec v1.4.6
 	github.com/crowdsecurity/go-cs-bouncer v0.0.3
 	github.com/go-routeros/routeros v0.0.0-20210123142807-2a44d57c6730
-	github.com/rs/zerolog v1.26.1
+	github.com/rs/zerolog v1.29.1
 	github.com/spf13/viper v1.15.0
 )
 
@@ -38,6 +38,8 @@ require (
 	github.com/magefile/mage v1.15.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/mattn/go-colorable v0.1.12 // indirect
+	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
