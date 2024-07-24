@@ -54,6 +54,7 @@ The bouncer configuration is made via environment variables:
 |----------------------------|--------------------------------------------------------------------------------------------------------------------|-------------------------|:--------:|
 | `CROWDSEC_BOUNCER_API_KEY` | CrowdSec bouncer API key required to be authorized to request local API                                            | `none`                  |    ✅     |
 | `CROWDSEC_URL`             | Host and port of CrowdSec agent                                                                                    | `http://crowdsec:8080/` |    ✅     |
+| `CROWDSEC_ORIGINS`        | Space separated list of CrowdSec origins to filter from LAPI (EG: "crowdsec cscli") | `none` |     ❌      |
 | `LOG_LEVEL`                | Minimum log level for bouncer in [zerolog levels](https://pkg.go.dev/github.com/rs/zerolog#readme-leveled-logging) | `1`                     |    ❌     |
 | `MIKROTIK_HOST`            | Mikrotik appliance address                                                                                         | `none`                  |    ✅     |
 | `MIKROTIK_USER`            | Mikrotik appliance username                                                                                        | `none`                  |    ✅     |

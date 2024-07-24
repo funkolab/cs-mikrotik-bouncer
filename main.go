@@ -26,6 +26,7 @@ func main() {
 		APIKey:         crowdsecBouncerAPIKey,
 		APIUrl:         crowdsecBouncerURL,
 		TickerInterval: "5s",
+		Origins:        crowdsecOrigins,
 	}
 	if err := bouncer.Init(); err != nil {
 		log.Fatal().Err(err).Msg("Bouncer init failed")
