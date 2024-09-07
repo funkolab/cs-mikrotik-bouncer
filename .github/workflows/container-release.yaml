@@ -43,10 +43,10 @@ jobs:
       
       - name: Build and Push to GHCR with ko
         env:
-          KO_DOCKER_REPO: ghcr.io/funkolab
+          KO_DOCKER_REPO: ghcr.io/belthesar
           TAGS: ${{ steps.meta.outputs.tags }}
           LABELS: ${{ steps.meta.outputs.labels }}
-          PLATFORMS: linux/amd64,linux/arm64,linux/arm
+          PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
         run: |
           PTAGS=`echo $TAGS | sed 's/cs-mikrotik-bouncer://g'`
           export SOURCE_DATE_EPOCH=$(date +%s)
