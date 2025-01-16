@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install ko 
-        uses: imjasonh/setup-ko@v0.7
+        uses: imjasonh/setup-ko@v0.8
       
       - name: Docker meta
         id: meta
