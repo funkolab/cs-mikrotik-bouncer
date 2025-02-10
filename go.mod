@@ -1,11 +1,8 @@
 module github.com/funkolab/cs-mikrotik-bouncer
 
 go 1.22
-
-toolchain go1.22.5
-
 require (
-	github.com/crowdsecurity/crowdsec v1.6.4
+	github.com/crowdsecurity/crowdsec v1.6.5
 	github.com/crowdsecurity/go-cs-bouncer v0.0.14
 	github.com/go-routeros/routeros/v3 v3.0.1
 	github.com/rs/zerolog v1.33.0
@@ -30,13 +27,13 @@ require (
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/blackfireio/osinfo v1.0.5 // indirect
-	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/crowdsecurity/go-cs-lib v0.0.15 // indirect
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
+	github.com/crowdsecurity/go-cs-lib v0.0.16 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/expr-lang/expr v1.16.9 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/goccy/go-yaml v1.11.2 // indirect
-	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.1 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
@@ -51,7 +48,7 @@ require (
 	github.com/prometheus/client_golang v1.18.0 // indirect
 	github.com/prometheus/client_model v0.5.0 // indirect
 	github.com/prometheus/common v0.45.0 // indirect
-	github.com/prometheus/procfs v0.12.0 // indirect
+	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
@@ -64,11 +61,11 @@ require (
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
-	golang.org/x/net v0.24.0 // indirect
-	golang.org/x/sys v0.24.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/net v0.34.0 // indirect
+	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
+	google.golang.org/protobuf v1.36.3 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/tomb.v2 v2.0.0-20161208151619-d5d1b5820637 // indirect
