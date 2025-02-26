@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/go-routeros/routeros"
+	"github.com/go-routeros/routeros/v3"
 	"github.com/rs/zerolog/log"
 
 	"golang.org/x/sync/errgroup"

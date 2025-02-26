@@ -7,7 +7,7 @@ import (
 	"github.com/crowdsecurity/crowdsec/pkg/models"
 	"github.com/rs/zerolog/log"
 
-	"github.com/go-routeros/routeros"
+	"github.com/go-routeros/routeros/v3"
 )
 
 func dial() (*routeros.Client, error) {
