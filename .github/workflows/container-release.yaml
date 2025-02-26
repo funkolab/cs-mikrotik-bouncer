@@ -48,6 +48,7 @@ jobs:
           LABELS: ${{ steps.meta.outputs.labels }}
           PLATFORMS: linux/amd64,linux/arm64,linux/arm
         run: |
+          go mod tidy
           PTAGS=`echo $TAGS | sed 's/cs-mikrotik-bouncer://g'`
           export SOURCE_DATE_EPOCH=$(date +%s)
           ko build -B --image-label "$LABELS" -t "$PTAGS" --platform=$PLATFORMS .
