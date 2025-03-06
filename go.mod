@@ -1,6 +1,8 @@
 module github.com/funkolab/cs-mikrotik-bouncer
 
 go 1.22
+toolchain go1.23.7
+
 require (
 	github.com/crowdsecurity/crowdsec v1.6.5
 	github.com/crowdsecurity/go-cs-bouncer v0.0.14
@@ -21,7 +23,7 @@ require (
 	github.com/go-openapi/strfmt v0.21.7 // indirect
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/go-openapi/validate v0.22.1 // indirect
-	golang.org/x/sync v0.11.0
+	golang.org/x/sync v0.12.0
 )
 
 require (
