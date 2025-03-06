@@ -2,6 +2,7 @@ version: '3.8'
 services:
   bouncer-mikrotik:
     image: ghcr.io/funkolab/cs-mikrotik-bouncer:latest
+    network_mode: "host"
     container_name: bouncer-mikrotik
     environment:
       CROWDSEC_BOUNCER_API_KEY: MyApiKey
