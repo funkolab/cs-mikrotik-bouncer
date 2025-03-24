@@ -7,7 +7,7 @@ require (
 	github.com/crowdsecurity/crowdsec v1.6.5
 	github.com/crowdsecurity/go-cs-bouncer v0.0.14
 	github.com/go-routeros/routeros/v3 v3.0.1
-	github.com/rs/zerolog v1.33.0
+	github.com/rs/zerolog v1.34.0
 	github.com/spf13/viper v1.20.0
 )
 
