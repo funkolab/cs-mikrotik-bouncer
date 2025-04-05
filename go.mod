@@ -1,6 +1,9 @@
 module github.com/funkolab/cs-mikrotik-bouncer
 
-go 1.22
+go 1.24.1
+
+toolchain go1.24.2
+
 require (
 	github.com/crowdsecurity/crowdsec v1.6.8
 	github.com/crowdsecurity/go-cs-bouncer v0.0.14
