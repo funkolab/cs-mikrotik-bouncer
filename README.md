@@ -5,6 +5,9 @@
 # CrowdSec Mikrotik Bouncer
 A CrowdSec Bouncer for MikroTik RouterOS appliance
 
+⚠️ This repository is no longer actively maintained.
+You can find an alternative project at the following address: https://github.com/nvtkaszpir/cs-mikrotik-bouncer-alt
+
 ![GitHub](https://img.shields.io/github/license/funkolab/cs-mikrotik-bouncer)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/funkolab/cs-mikrotik-bouncer)
 [![Go Report Card](https://goreportcard.com/badge/github.com/funkolab/cs-mikrotik-bouncer)](https://goreportcard.com/report/github.com/funkolab/cs-mikrotik-bouncer)
